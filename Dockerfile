@@ -12,14 +12,14 @@ RUN apk add ca-certificates
 # 选用国内镜像源以提高下载速度
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tencent.com/g' /etc/apk/repositories \
     && apk add --update --no-cache \
-    php8 \
-    php8-json \
-    php8-ctype \
-	php8-exif \
-	php8-pdo \
-    php8-pdo_mysql \
-    php8-fpm \
-    php8-curl \   
+    php7 \
+    php7-json \
+    php7-ctype \
+	php7-exif \
+	php7-pdo \
+    php7-pdo_mysql \
+    php7-fpm \
+    php7-curl \   
     nginx \
     && rm -f /var/cache/apk/*
 
@@ -31,11 +31,11 @@ COPY . /app
 
 # 替换nginx、fpm、php配置
 RUN cp /app/conf/nginx.conf /etc/nginx/conf.d/default.conf \
-    && cp /app/conf/fpm.conf /etc/php8/php-fpm.d/www.conf \
-    && cp /app/conf/php.ini /etc/php8/php.ini \
+    && cp /app/conf/fpm.conf /etc/php7/php-fpm.d/www.conf \
+    && cp /app/conf/php.ini /etc/php7/php.ini \
     && mkdir -p /run/nginx \
     && chmod -R 777 /app/runtime \
-    && mv /usr/sbin/php-fpm8 /usr/sbin/php-fpm
+    && mv /usr/sbin/php-fpm7 /usr/sbin/php-fpm
 
 # 暴露端口
 # 此处端口必须与「服务设置」-「流水线」以及「手动上传代码包」部署时填写的端口一致，否则会部署失败。
